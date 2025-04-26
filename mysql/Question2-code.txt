@@ -1,0 +1,54 @@
+create database employeedetails;
+use employeedetails;
+
+
+create table emp(
+empcode int,
+empname varchar(255),
+empage int,
+esalart int
+);
+
+insert into emp 
+(empcode,empname ,empage ,esalart )
+values
+(101,'jenny',25,10000),
+(102,'jacky',30,20000),
+(103,'joe',20,40000),
+(104,'john',40,80000),
+(105,'shameer',25,90000);
+
+select * from emp;
+
+
+
+
+java code:
+import java.sql.*;
+
+public class dbconnection {
+    public static void main(String[] args) {
+        String dbconnection="jdbc:mysql://localhost:3306/employeedetails?user=root&password=root";
+
+        String query="select * from emp";
+
+        try(Connection connection= DriverManager.getConnection(dbconnection))
+        {
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            ResultSet resultSet=preparedStatement.executeQuery();
+
+            while (resultSet.next())
+            {
+                System.out.println(
+                                 resultSet.getInt(1)+" "
+                                +resultSet.getString(2)+" "
+                                +resultSet.getInt(3)+" "
+                                +resultSet.getString(4));
+            }
+
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+}
